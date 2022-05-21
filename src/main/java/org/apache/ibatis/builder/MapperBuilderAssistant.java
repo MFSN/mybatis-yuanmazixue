@@ -292,8 +292,9 @@ public class MapperBuilderAssistant extends BaseBuilder {
     if (statementParameterMap != null) {
       statementBuilder.parameterMap(statementParameterMap);
     }
-
+    //构建成mappedstatement
     MappedStatement statement = statementBuilder.build();
+    //将mappedstatement加入到configuration的mappedStatements属性中 key为namespace+select中id
     configuration.addMappedStatement(statement);
     return statement;
   }

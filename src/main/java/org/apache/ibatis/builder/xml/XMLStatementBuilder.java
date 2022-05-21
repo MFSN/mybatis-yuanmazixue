@@ -74,7 +74,8 @@ public class XMLStatementBuilder extends BaseBuilder {
 
     String parameterType = context.getStringAttribute("parameterType");
     Class<?> parameterTypeClass = resolveClass(parameterType);
-
+    //这里的lang表示用什么语法解析器对sql语句进行解析，如果不想用mybatis自带的语法解析器进行解析可以使用lang指定一个自定义的解析器，
+    // 比如不想用mybatis的if、else、foreach而是想用freemaker进行实现可以通过lang指定
     String lang = context.getStringAttribute("lang");
     LanguageDriver langDriver = getLanguageDriver(lang);
 
@@ -109,7 +110,7 @@ public class XMLStatementBuilder extends BaseBuilder {
     String keyProperty = context.getStringAttribute("keyProperty");
     String keyColumn = context.getStringAttribute("keyColumn");
     String resultSets = context.getStringAttribute("resultSets");
-
+    //构建mappedstatement
     builderAssistant.addMappedStatement(id, sqlSource, statementType, sqlCommandType,
         fetchSize, timeout, parameterMap, parameterTypeClass, resultMap, resultTypeClass,
         resultSetTypeEnum, flushCache, useCache, resultOrdered,
