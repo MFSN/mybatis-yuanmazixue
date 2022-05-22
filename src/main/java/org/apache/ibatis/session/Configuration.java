@@ -687,6 +687,7 @@ public class Configuration {
   }
 
   public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
+    //根据mapperstatement的类别创建statementhandler 一个simple，一个preparedstatementhandler一个是callablestatementhandler 默认使preparestatementhandler
     StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
     statementHandler = (StatementHandler) interceptorChain.pluginAll(statementHandler);
     return statementHandler;
@@ -707,9 +708,11 @@ public class Configuration {
     } else {
       executor = new SimpleExecutor(this, transaction);
     }
+    //如果开启了二级缓存executor会被替换成cachingexecutor 默认是开启的 其中里面的query可以看到使用mapper中的cache属性和二级缓存使用以及二级缓存中查询不到又查询baseexecutor的逻辑
     if (cacheEnabled) {
       executor = new CachingExecutor(executor);
     }
+    //拦截插件解析器
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }

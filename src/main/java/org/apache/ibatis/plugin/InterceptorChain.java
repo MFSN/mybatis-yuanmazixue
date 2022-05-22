@@ -28,6 +28,7 @@ public class InterceptorChain {
 
   public Object pluginAll(Object target) {
     for (Interceptor interceptor : interceptors) {
+      //通过插件中的plugin方法来对target进行代理拦截 从而实现插件的方法
       target = interceptor.plugin(target);
     }
     return target;
